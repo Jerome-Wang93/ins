@@ -12,6 +12,7 @@ import com.parse.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
+
     var signUpstatus : Boolean = true
     override fun onClick(v: View) {
 
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 user.signUpInBackground(SignUpCallback {
                     if ( it == null){
                         Toast.makeText(this,"Sign up successful",Toast.LENGTH_SHORT).show()
+                        Log.i("great","great")
                     }else{
                         Toast.makeText(this,it.message,Toast.LENGTH_SHORT).show()
                     }
