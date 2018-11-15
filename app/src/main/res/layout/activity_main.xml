@@ -2,11 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <ImageView
+        android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:src="@drawable/logo" />
@@ -39,7 +41,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="239dp"
-        android:onClick="signUp"
         android:text="Sign up" />
 
     <TextView
