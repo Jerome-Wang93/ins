@@ -1,6 +1,7 @@
 package com.example.jerome.instagramclone
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +19,11 @@ class MainActivity : AppCompatActivity() {
     fun hideKeyboard(){
         var input : InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         input.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0)
+    }
+
+    fun showUserlist(){
+        var intent : Intent = Intent(this,UserListActivity :: class.java)
+        startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                     user.signUpInBackground(SignUpCallback {
                         if ( it == null){
                             Toast.makeText(this,"Sign up successful",Toast.LENGTH_SHORT).show()
+                            showUserlist()
                         }else{
                             Toast.makeText(this,it.message,Toast.LENGTH_SHORT).show()
                         }
@@ -59,6 +66,7 @@ class MainActivity : AppCompatActivity() {
                             LogInCallback { user, e ->
                                 if ( e == null ){
                                     Toast.makeText(this,"Log in successful",Toast.LENGTH_SHORT).show()
+                                    showUserlist()
                                 }else{
                                     Toast.makeText(this,e.message,Toast.LENGTH_SHORT).show()
                                 }
