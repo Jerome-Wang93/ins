@@ -3,9 +3,11 @@ package com.example.jerome.instagramclone
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
+import com.parse.FindCallback
 import com.parse.Parse
 import com.parse.ParseObject
 import com.parse.ParseQuery
@@ -17,25 +19,23 @@ class UserListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_list)
 
-        var userlist : ListView = findViewById(R.id.userListView) as ListView
-        var usernames : ArrayList<String> = ArrayList<String>()
+        var userlist = findViewById<View>(R.id.userListView) as ListView
+        var arrayList  = ArrayList<String>()
 
-        var query : ParseQuery<ParseObject>  = ParseQuery.getQuery("User")
-        //query.whereNotEqualTo("username",ParseUser.getCurrentUser().username)
-        Log.i("tshoot","before find")
+        var query : ParseQuery<ParseUser> = ParseUser.getQuery()
+        query.whereNotEqualTo("username",ParseUser.getCurrentUser().username)
         query.findInBackground { objects, e ->
-            if ( e == null){
+            if (e == null && objects.size > 0){
                 for ( user in objects){
-                    Log.i("tshoot","result" + objects.size)
+                    arrayList.add(user.getString("username").toString())
                 }
             }else{
-                Toast.makeText(this,e.message,Toast.LENGTH_SHORT).show()
+                Log.i("ttt","no")
             }
         }
 
-
-
-        var adapter  = ArrayAdapter(this,android.R.layout.simple_list_item_1,usernames)
+        var adapter : ArrayAdapter<String> = ArrayAdapter(this,android.R.layout.simple_list_item_1,arrayList)
         userlist.setAdapter(adapter)
+
     }
 }

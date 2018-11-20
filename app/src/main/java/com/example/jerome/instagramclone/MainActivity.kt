@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+
         var background : RelativeLayout = findViewById(R.id.back) as RelativeLayout
         var imageView : ImageView = findViewById(R.id.logo) as ImageView
         var username : EditText = findViewById(R.id.username) as EditText
