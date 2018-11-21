@@ -1,8 +1,12 @@
 package com.example.jerome.instagramclone
 
+import android.content.pm.PackageManager
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
@@ -12,8 +16,28 @@ import com.parse.Parse
 import com.parse.ParseObject
 import com.parse.ParseQuery
 import com.parse.ParseUser
+import java.util.jar.Manifest
 
 class UserListActivity : AppCompatActivity() {
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        var menuInflater = getMenuInflater()
+        menuInflater.inflate(R.menu.share_menu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if ( item.itemId == R.id.share ){
+            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    if (checkSelfPermission(android.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+
+                    }
+            }else{
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
