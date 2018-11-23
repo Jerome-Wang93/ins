@@ -3,6 +3,7 @@ package com.example.jerome.instagramclone;
 import android.app.Application;
 
 import com.parse.Parse;
+import com.parse.ParseFile;
 
 public class StartParseServer extends Application {
     @Override
