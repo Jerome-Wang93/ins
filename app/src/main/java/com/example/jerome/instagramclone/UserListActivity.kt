@@ -15,7 +15,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ImageView
-import android.widget.ListView
 import android.widget.Toast
 import com.parse.*
 import kotlinx.android.synthetic.main.activity_user_list.*
@@ -65,23 +64,26 @@ class UserListActivity : AppCompatActivity() {
             try {
                 var bitmap : Bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver,image)
                 var stream : ByteArrayOutputStream = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.PNG,100,stream)
+                bitmap.compress(Bitmap.CompressFormat.PNG,50,stream)
                 var byteArray = stream.toByteArray()
                 var file : ParseFile = ParseFile("image.png",byteArray)
-                file.saveInBackground { id:ParseException ->
-                    if ( id == null ){
-                        var obj : ParseObject = ParseObject("Image")
+                var imgview = findViewById<ImageView>(R.id.image)
+                imgview.setImageBitmap(bitmap)
+                file.saveInBackground { callback : ParseException? ->
+                    if (callback == null){
+                        Log.i("save","success")
+                        var obj = ParseObject("Image")
                         obj.put("image",file)
                         obj.put("username",ParseUser.getCurrentUser().username)
                         obj.saveInBackground {
-                            if ( it == null){
-                                Toast.makeText(this,"yes",Toast.LENGTH_SHORT).show()
+                            if (it == null){
+                                Log.i("save","success")
                             }else{
-                                Log.i("saveOb",it.message)
+                                Log.i("save",it.message)
                             }
                         }
                     }else{
-                        Log.i("saveFile",id.message+" by "+id.toString())
+                        Log.i("save",callback.message)
                     }
                 }
             }catch (e : IOException){

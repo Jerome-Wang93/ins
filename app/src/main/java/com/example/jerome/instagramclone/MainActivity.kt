@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        ParseUser.logOut()
+
 
 
         var background : RelativeLayout = findViewById(R.id.back) as RelativeLayout
@@ -61,6 +63,7 @@ class MainActivity : AppCompatActivity() {
                             showUserlist()
                         }else{
                             Toast.makeText(this,it.message,Toast.LENGTH_SHORT).show()
+                            Log.i("sign up",it.message)
                         }
                     })
                 }else {
