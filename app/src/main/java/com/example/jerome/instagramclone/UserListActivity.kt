@@ -15,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.ListView
 import android.widget.Toast
 import com.parse.*
 import kotlinx.android.synthetic.main.activity_user_list.*
@@ -45,6 +46,9 @@ class UserListActivity : AppCompatActivity() {
             }else{
                 sharePhoto()
             }
+        }
+        if ( item.itemId == R.id.logout){
+            this.finish()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -96,5 +100,22 @@ class UserListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_list)
+
+        var list = findViewById(R.id.listview) as ListView
+        var usernames : ArrayList<String> =  ArrayList<String>()
+
+        var query = ParseUser.getQuery()
+        query.whereNotEqualTo("username",ParseUser.getCurrentUser().username)
+        query.findInBackground { objects, e ->
+            if ( e == null && objects != null){
+                for (user in objects){
+                    usernames.add(user.username)
+                }
+            }else{
+                Log.i("listview",e.message)
+            }
+        }
+        var adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,usernames)
+        list.setAdapter(adapter)
     }
 }

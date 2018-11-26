@@ -6,7 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".UserListActivity">
 
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ListView>
+
     <ImageView
+        android:layout_below="@id/listview"
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

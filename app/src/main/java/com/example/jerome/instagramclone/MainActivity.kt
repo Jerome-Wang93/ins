@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
                     user.signUpInBackground(SignUpCallback {
                         if ( it == null){
                             Toast.makeText(this,"Sign up successful",Toast.LENGTH_SHORT).show()
-                            showUserlist()
                         }else{
                             Toast.makeText(this,it.message,Toast.LENGTH_SHORT).show()
                             Log.i("sign up",it.message)
