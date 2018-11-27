@@ -32,8 +32,6 @@ class MainActivity : AppCompatActivity() {
 
         ParseUser.logOut()
 
-
-
         var background : RelativeLayout = findViewById(R.id.back) as RelativeLayout
         var imageView : ImageView = findViewById(R.id.logo) as ImageView
         var username : EditText = findViewById(R.id.username) as EditText
@@ -62,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                             Toast.makeText(this,"Sign up successful",Toast.LENGTH_SHORT).show()
                         }else{
                             Toast.makeText(this,it.message,Toast.LENGTH_SHORT).show()
-                            Log.i("sign up",it.message)
+                            Log.i("ins","sign up error: " + it.message )
                         }
                     })
                 }else {
@@ -70,9 +68,11 @@ class MainActivity : AppCompatActivity() {
                             LogInCallback { user, e ->
                                 if ( e == null ){
                                     Toast.makeText(this,"Log in successful",Toast.LENGTH_SHORT).show()
+                                    Log.i("ins","log in successful")
                                     showUserlist()
                                 }else{
                                     Toast.makeText(this,e.message,Toast.LENGTH_SHORT).show()
+                                    Log.i("ins","log in error: " + e.message)
                                 }
                             })
                 }

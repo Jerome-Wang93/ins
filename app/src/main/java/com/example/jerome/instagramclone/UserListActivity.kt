@@ -41,24 +41,13 @@ class UserListActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if ( item.itemId == R.id.share){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                sharePhoto()
-            }else{
-                sharePhoto()
-            }
+            sharePhoto()
         }
         if ( item.itemId == R.id.logout){
+            ParseUser.logOut()
             this.finish()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if ( grantResults.size > 0 && requestCode == 1){
-            sharePhoto()
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -75,23 +64,23 @@ class UserListActivity : AppCompatActivity() {
                 imgview.setImageBitmap(bitmap)
                 file.saveInBackground { callback : ParseException? ->
                     if (callback == null){
-                        Log.i("save","success")
+                        Log.i("ins","file save successful")
                         var obj = ParseObject("Image")
                         obj.put("image",file)
                         obj.put("username",ParseUser.getCurrentUser().username)
                         obj.saveInBackground {
                             if (it == null){
-                                Log.i("save","success")
+                                Log.i("ins","object save successful")
                             }else{
-                                Log.i("save",it.message)
+                                Log.i("ins","object save error: " + it.message)
                             }
                         }
                     }else{
-                        Log.i("save",callback.message)
+                        Log.i("ins","file save error: " + callback.message)
                     }
                 }
             }catch (e : IOException){
-                Log.i("try",e.message)
+                Log.i("ins",e.message)
             }
 
         }
@@ -103,7 +92,6 @@ class UserListActivity : AppCompatActivity() {
 
         var list = findViewById(R.id.listview) as ListView
         var usernames : ArrayList<String> =  ArrayList<String>()
-
         var query = ParseUser.getQuery()
         query.whereNotEqualTo("username",ParseUser.getCurrentUser().username)
         query.findInBackground { objects, e ->
@@ -112,10 +100,15 @@ class UserListActivity : AppCompatActivity() {
                     usernames.add(user.username)
                 }
             }else{
-                Log.i("listview",e.message)
+                Log.i("ins","find users error: " + e.message)
             }
         }
         var adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,usernames)
         list.setAdapter(adapter)
+        list.setOnItemClickListener { parent, view, position, id ->
+            var seedintent = Intent(applicationContext,UserFeddActivity :: class.java)
+            seedintent.putExtra("username",usernames[position])
+            startActivity(seedintent)
+        }
     }
 }
